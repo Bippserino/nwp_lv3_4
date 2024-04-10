@@ -2,6 +2,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Auth;
+use App\Models\User;
 
 class Project extends Model
 {
@@ -13,11 +15,6 @@ class Project extends Model
         'user_id' => 'int',
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function teamMembers()
     {
         return $this->belongsToMany(User::class)->withPivot('is_leader')->withTimestamps();
@@ -25,6 +22,11 @@ class Project extends Model
 
     public function leader()
     {
-        return $this->teamMembers()->wherePivot('is_leader', true);
+        return $this->teamMembers()->wherePivot('is_leader', 1);
+    }
+
+    public function users() {
+        $user_id = auth()->user();
+        return $this->belongsToMany('App\Models\User', 'project_user')->wherePivot('user_id', $user_id);
     }
 }

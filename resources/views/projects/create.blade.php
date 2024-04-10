@@ -5,15 +5,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dodavanje projekta</title>
+    <title>Add project</title>
     <style>
         form {
             display: flex;
             flex-direction: column;
             width: 50vw;
         }
-        form * {
-            margin-bottom: 0.5rem;
+        form input, form textarea {
+            margin-bottom: 1rem;
         }
         button {
             width: 50%;
@@ -29,17 +29,32 @@
     <form action="{{ route('project.store') }}" method="POST">
         @csrf
 
-        <label for="name">Naziv projekta:</label>
+        <label for="name">Project name:</label>
         <input type="text" name="name" id="name">
 
-        <label for="description">Opis projekta:</label>
+        <label for="description">Project description:</label>
         <textarea name="description" id="description"></textarea>
 
-        <label for="number">Cijena projekta:</label>
+        <label for="number">Project price:</label>
         <input type="number" name="price" id="price">
-        <input type="date" name="start_date" id="start_date">
 
-        <button type="submit">Stvori projekt</button>
+        <label for="tasks_completed">Completed tasks:</label>
+        <input type="text" name="tasks_completed" id="tasks_completed">
+
+        <label for="start_date">Start date:</label>
+        <input type="date" name="start_date" id="start_date">
+        <label for="end_date">End date:</label>
+        <input type="date" name="end_date" id="end_date">
+        <label for="users">Users (for multiple selection press CTRL + left click):</label>
+        <select name="users[]" multiple>
+            @foreach ($users as $user)
+                @if ($user != $u)
+                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                @endif
+            @endforeach
+        </select>
+
+        <button type="submit">Create project</button>
     </form>
 </body>
 </html>

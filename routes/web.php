@@ -9,7 +9,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $user = auth()->user();
+    $projects = $user->projects;
+    return view('dashboard', ['projects' => $projects, 'user' => $user]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -18,9 +20,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/projects', [ProjectController::class, 'index'])->name('project.index');
-Route::get('/projects/create', [ProjectController::class, 'create'])->name('project.create');
-Route::post('/projects/create', [ProjectController::class, 'store'])->name('project.store');
+Route::get('dashboard/create', [ProjectController::class, 'create'])->name('project.create');
+Route::post('dashboard/create', [ProjectController::class, 'store'])->name('project.store');
+Route::get('/dashboard/edit/{id}', [ProjectController::class, 'edit'])->name('project.edit');
+Route::put('/dashboard/update/{id}', [ProjectController::class, 'update'])->name('project.update');
+Route::delete('/dashboard/delete/{id}', [ProjectController::class, 'destroy'])->name('project.destroy');
 
 
 require __DIR__.'/auth.php';
