@@ -29,6 +29,7 @@
         @csrf
         @method('PUT')
         <label for="name">Project name:</label>
+        <!-- if function inside input checks if the user is leader and disables edit of certain inputs if not -->
         <input type="text" name="name" id="name" value="{{$project->name}}" @if (!$isLeader) disabled @endif>
 
         <label for="description">Project description:</label>

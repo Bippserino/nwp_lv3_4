@@ -47,6 +47,7 @@
                 <div class="p-6 text-gray-900">
                     <div class="projects">
                     <h1>User projects</h1>
+                    <!-- Fill with all projects which are users-->
                     @if ($projects->isEmpty())
                         <p>No projects found.</p>
                     @else

@@ -33,7 +33,7 @@
         <input type="text" name="name" id="name">
 
         <label for="description">Project description:</label>
-        <textarea name="description" id="description"></textarea>
+        <input type="text" name="description" id="description">
 
         <label for="number">Project price:</label>
         <input type="number" name="price" id="price">
@@ -47,6 +47,7 @@
         <input type="date" name="end_date" id="end_date">
         <label for="users">Users (for multiple selection press CTRL + left click):</label>
         <select name="users[]" multiple>
+            <!-- Fill with all available users except for the current user -->
             @foreach ($users as $user)
                 @if ($user != $u)
                     <option value="{{ $user->id }}">{{ $user->name }}</option>
